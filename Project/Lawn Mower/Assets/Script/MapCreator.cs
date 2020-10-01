@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapCreator : MonoBehaviour
 {
 	 [SerializeField]
-	 private Vector2 dimension = new Vector2(0,0);
+	 public Vector2 dimension = new Vector2(0,0);
 	 [SerializeField]
 	 private float distanceTile = 1;
 	 public Transform originSpawner;
