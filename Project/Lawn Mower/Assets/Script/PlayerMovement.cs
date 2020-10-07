@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField]
 	private Vector2 actualLocation = new Vector2(0,0);
 	private GameManager gm;
+	
+	public Tile FirstTile;
+	public Tile LastTile;
 	void Start(){
 		//Get Gamemanager from tag
 		GameObject temp_gm =  GameObject.FindGameObjectWithTag("GameManager");
@@ -25,72 +28,30 @@ public class PlayerMovement : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.W)){
 			
 			Vector2 newpos = new Vector2(0,1);
-			actualLocation += newpos;
-			//if the Tile is already a path  you clean all the paths and you die
-			if(gm.getTileStatus(actualLocation) == Tile.Status.Path){
-				gm.CleanAllPaths();
-				actualLocation= new Vector2(0,0);
-			}
-			//change status of Tile to path
-			if(gm.getTileStatus(actualLocation) != Tile.Status.Border){
-				gm.SetStatusTile(actualLocation,Tile.Status.Path);
-			}
-			
-			moveToTile();
+			SelectNextTile(newpos);
 		}
 				//input Down
 		if(Input.GetKeyDown(KeyCode.S)){
 			
 			Vector2 newpos = new Vector2(0,-1);
-			actualLocation += newpos;
-			//if the Tile is already a path  you clean all the paths and you die
-			if(gm.getTileStatus(actualLocation) == Tile.Status.Path){
-				gm.CleanAllPaths();
-				actualLocation= new Vector2(0,0);
-			}
-			//change status of Tile to path
-			if(gm.getTileStatus(actualLocation) != Tile.Status.Border){
-				gm.SetStatusTile(actualLocation,Tile.Status.Path);
-			}
-			
-			moveToTile();
+			SelectNextTile(newpos);
 		}
 				//input Left
 		if(Input.GetKeyDown(KeyCode.A)){
 			
 			Vector2 newpos = new Vector2(-1,0);
-			actualLocation += newpos;
-			//if the Tile is already a path  you clean all the paths and you die
-			if(gm.getTileStatus(actualLocation) == Tile.Status.Path){
-				gm.CleanAllPaths();
-				actualLocation= new Vector2(0,0);
-			}
-			//change status of Tile to path
-			if(gm.getTileStatus(actualLocation) != Tile.Status.Border){
-				gm.SetStatusTile(actualLocation,Tile.Status.Path);
-			}
-			
-			moveToTile();
+			SelectNextTile(newpos);
 		}
 				//input Right
 		if(Input.GetKeyDown(KeyCode.D)){
 			
 			Vector2 newpos = new Vector2(1,0);
-			actualLocation += newpos;
-			//if the Tile is already a path  you clean all the paths and you die
-			if(gm.getTileStatus(actualLocation) == Tile.Status.Path){
-				gm.CleanAllPaths();
-				actualLocation= new Vector2(0,0);
-			}
-			//change status of Tile to path
-			if(gm.getTileStatus(actualLocation) != Tile.Status.Border){
-				gm.SetStatusTile(actualLocation,Tile.Status.Path);
-			}
-			
-			moveToTile();
+			SelectNextTile(newpos);
 		}
     }
 	private void init(){
+		FirstTile = null;
+		LastTile = null;
 		 GameObject[] temp = GameObject.FindGameObjectsWithTag("Tile");
 		//pick all the tiles component from the array and put on the list
 		foreach(GameObject i in temp){
@@ -108,5 +69,38 @@ public class PlayerMovement : MonoBehaviour
 				transform.position = t.gameObject.transform.position;
 			}
 		}
+	}
+	private void SelectNextTile(Vector2 newpos){
+			
+			//if the Tile is already a path  you clean all the paths and you die
+			if(gm.getTileStatus(actualLocation + newpos) == Tile.Status.Path){
+				gm.CleanAllPaths();
+				actualLocation= new Vector2(0,0);
+				moveToTile();
+				return ;
+			}
+			//change status of Tile to path
+			if(gm.getTileStatus(actualLocation + newpos) == Tile.Status.Grown){
+				if(gm.getTileStatus(actualLocation) == Tile.Status.Border){
+					FirstTile = gm.getTile(actualLocation);
+				}
+				actualLocation += newpos;
+				moveToTile();
+				gm.SetStatusTile(actualLocation,Tile.Status.Path);
+				return ;
+			}
+			//change status of Tile to path
+			if(gm.getTileStatus(actualLocation + newpos) == Tile.Status.Border){
+				if(gm.getTileStatus(actualLocation) == Tile.Status.Path){
+					LastTile = gm.getTile(actualLocation);
+					gm.FillFloodAlgorithm(gm.getTile(new Vector2(actualLocation.x-1,actualLocation.y)));
+					//gm.getTile(new Vector2(actualLocation.x-1,actualLocation.y)).currentStatus = Tile.Status.Cut;
+				}
+				actualLocation += newpos;
+				moveToTile();
+				return ;
+			}
+			actualLocation += newpos;
+			moveToTile();
 	}
 }

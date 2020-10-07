@@ -7,6 +7,7 @@ public class Tile : MonoBehaviour
 	public Vector2 position = new Vector2(0,0);
 	private MapCreator _mapCreator;
 	public enum Status {Border,Path,Cut,Grown};
+	public bool visited = false;
 	
 	[SerializeField]
 	public Status currentStatus;
