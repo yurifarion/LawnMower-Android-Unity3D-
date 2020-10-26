@@ -25,25 +25,25 @@ public class PlayerMovement : MonoBehaviour
 			init();
 		}
 		//input up
-		if(Input.GetKeyDown(KeyCode.W)){
+		if(Input.GetKey(KeyCode.W)){
 			
 			Vector2 newpos = new Vector2(0,1);
 			SelectNextTile(newpos);
 		}
 				//input Down
-		if(Input.GetKeyDown(KeyCode.S)){
+		if(Input.GetKey(KeyCode.S)){
 			
 			Vector2 newpos = new Vector2(0,-1);
 			SelectNextTile(newpos);
 		}
 				//input Left
-		if(Input.GetKeyDown(KeyCode.A)){
+		if(Input.GetKey(KeyCode.A)){
 			
 			Vector2 newpos = new Vector2(-1,0);
 			SelectNextTile(newpos);
 		}
 				//input Right
-		if(Input.GetKeyDown(KeyCode.D)){
+		if(Input.GetKey(KeyCode.D)){
 			
 			Vector2 newpos = new Vector2(1,0);
 			SelectNextTile(newpos);
