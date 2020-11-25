@@ -7,6 +7,8 @@ TagManager:
   - Tile
   - MapCreator
   - GameManager
+  - MowerMachine
+  - Grass
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - PostProcessing
   - 
   - 
   - 
