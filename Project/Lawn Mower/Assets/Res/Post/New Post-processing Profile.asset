@@ -36,13 +36,13 @@ MonoBehaviour:
     value: 1
   focusDistance:
     overrideState: 1
-    value: 10.75
+    value: 10.77
   aperture:
     overrideState: 0
     value: 32
   focalLength:
     overrideState: 1
-    value: 151
+    value: 122
   kernelSize:
     overrideState: 0
     value: 1
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b924e2dad56384a8df2a1e111bb675, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -102,16 +102,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
   intensity:
     overrideState: 1
-    value: 0.46
+    value: 3.74
   threshold:
     overrideState: 1
-    value: 0.92
+    value: 1.89
   softKnee:
     overrideState: 0
     value: 0.5
@@ -158,7 +158,7 @@ MonoBehaviour:
     value: 0
   intensity:
     overrideState: 1
-    value: 0.72
+    value: 0.5
   color:
     overrideState: 1
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -182,10 +182,10 @@ MonoBehaviour:
     value: 0
   radius:
     overrideState: 1
-    value: 1.26
+    value: 0.25
   quality:
     overrideState: 1
-    value: 4
+    value: 3
 --- !u!114 &6008533043996707974
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb84e30e02715445aeb9959894e3b4d, type: 3}
   m_Name: ColorGrading
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -211,7 +211,7 @@ MonoBehaviour:
     defaultState: 1
   tonemapper:
     overrideState: 1
-    value: 1
+    value: 2
   toneCurveToeStrength:
     overrideState: 0
     value: 0
@@ -239,28 +239,28 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: 10
+    value: 25
   tint:
-    overrideState: 1
+    overrideState: 0
     value: 0
   colorFilter:
-    overrideState: 1
+    overrideState: 0
     value: {r: 1, g: 0.98343986, b: 0.8254717, a: 1}
   hueShift:
     overrideState: 0
     value: 0
   saturation:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 4
   brightness:
     overrideState: 0
     value: 0
   postExposure:
     overrideState: 1
-    value: 0
+    value: 0.66
   contrast:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 4
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -268,8 +268,8 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   mixerRedOutBlueIn:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: -15
   mixerGreenOutRedIn:
     overrideState: 0
     value: 0
