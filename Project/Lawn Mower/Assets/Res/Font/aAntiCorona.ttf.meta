@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 0bf8b0485bacb7641afef48aa20d22c7
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: a Anti Corona
+  fontNames:
+  - a Anti Corona
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c63998f3955990f4c9a83fcb6acd7c53, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
