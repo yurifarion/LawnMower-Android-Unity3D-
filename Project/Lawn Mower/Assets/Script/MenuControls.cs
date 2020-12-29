@@ -8,6 +8,8 @@ public class MenuControls : MonoBehaviour
 	public Sprite music_off_img;
 	public Sprite music_on_img;
 	
+	// scene objects
+	public GameObject fade;
 	//Main menu Buttons
 	public GameObject music_toggle_btn;
 	public GameObject title;
@@ -15,6 +17,7 @@ public class MenuControls : MonoBehaviour
 	public GameObject play_btn;
 	public GameObject hear_btn;
 	public GameObject level_menu;
+	public GameObject aboutMe;
 
 	public void Play(){
 		//remove the main menu canvas
@@ -29,6 +32,7 @@ public class MenuControls : MonoBehaviour
 	}
 	public void goToMainMenu(){
 		level_menu.GetComponent<Animator>().SetBool("Entrance",false);
+		aboutMe.GetComponent<Animator>().SetBool("Entrance",false);
 		//remove the main menu canvas
 		music_toggle_btn.GetComponent<Animator>().SetBool("Entrance",true);
 		title.GetComponent<Animator>().SetBool("Entrance",true);
@@ -36,8 +40,13 @@ public class MenuControls : MonoBehaviour
 		play_btn.GetComponent<Animator>().SetBool("Entrance",true);
 		hear_btn.GetComponent<Animator>().SetBool("Entrance",true);
 		
-		
 	}
+	public void SetLevel(int level){
+		level_menu.GetComponent<Animator>().SetBool("Entrance",false);
+		PlayerPrefs.SetInt("Level",level);
+		fade.SetActive(true);
+	}
+	
 	public void Music_On_Off(){
 		
 		if(AudioListener.volume > 0){
@@ -50,11 +59,55 @@ public class MenuControls : MonoBehaviour
 		}
 		
 	}
+	public void Intagram_GO(){
+		Application.OpenURL("https://www.instagram.com/yuriddeveloper");
+	}
+	public void Twitter_GO(){
+		Application.OpenURL("https://twitter.com/yuriddeveloper");
+	}
+	public void Youtube_GO(){
+		Application.OpenURL("https://www.youtube.com/channel/UC4J8D3fTU6Ot83xfg3NRXqg");
+	}
+	public void MoreGames(){
+		Application.OpenURL("https://play.google.com/store/apps/developer?id=yurifarion");
+	}
 	public void Share(){
-		
+		StartCoroutine(ShareAndroidText());
 	}
 	public void Heart(){
+		//remove the main menu canvas
+		music_toggle_btn.GetComponent<Animator>().SetBool("Entrance",false);
+		title.GetComponent<Animator>().SetBool("Entrance",false);
+		share_btn.GetComponent<Animator>().SetBool("Entrance",false);
+		play_btn.GetComponent<Animator>().SetBool("Entrance",false);
+		hear_btn.GetComponent<Animator>().SetBool("Entrance",false);
 		
+		if(!aboutMe.activeSelf)aboutMe.SetActive(true);
+		else aboutMe.GetComponent<Animator>().SetBool("Entrance",true);
 	}
 	
+
+	IEnumerator ShareAndroidText()
+	{
+		yield return new WaitForEndOfFrame();
+		//execute the below lines if being run on a Android device
+		//Reference of AndroidJavaClass class for intent
+		AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent");
+		//Reference of AndroidJavaObject class for intent
+		AndroidJavaObject intentObject = new AndroidJavaObject("android.content.Intent");
+		//call setAction method of the Intent object created
+		intentObject.Call<AndroidJavaObject>("setAction", intentClass.GetStatic<string>("ACTION_SEND"));
+		//set the type of sharing that is happening
+		intentObject.Call<AndroidJavaObject>("setType", "text/plain");
+		//add data to be passed to the other activity i.e., the data to be sent
+		intentObject.Call<AndroidJavaObject>("This is Subject", intentClass.GetStatic<string>("EXTRA_SUBJECT"), "Hey I am playing this awesome new game called Lawn Mower,do give it try and enjoy");
+		intentObject.Call<AndroidJavaObject>("Title", intentClass.GetStatic<string>("EXTRA_TITLE"), "Lawn Mower");
+		intentObject.Call<AndroidJavaObject>("Body", intentClass.GetStatic<string>("EXTRA_TEXT"), "Link:nonexist ( it is still on demo sorry :/");
+		//get the current activity
+		AndroidJavaClass unity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+		AndroidJavaObject currentActivity = unity.GetStatic<AndroidJavaObject>("currentActivity");
+		//start the activity by sending the intent data
+		AndroidJavaObject jChooser = intentClass.CallStatic<AndroidJavaObject>("createChooser", intentObject, "Share Via");
+		currentActivity.Call("startActivity",jChooser);
+	}
 }
