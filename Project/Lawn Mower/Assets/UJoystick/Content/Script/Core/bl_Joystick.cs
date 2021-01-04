@@ -28,12 +28,14 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Canvas m_Canvas;
     private float diff;
     private Vector3 PressScaleVector;
-
+	
+	private GameManager gm;
     /// <summary>
     /// 
     /// </summary>
     void Start()
     {
+		gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         if (StickRect == null)
         {
             Debug.LogError("Please add the stick for joystick work!.");
@@ -74,19 +76,21 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     /// </summary>
     void Update()
     {
-        DeathArea = CenterReference.position;
-        //If this not free (not touched) then not need continue
-        if (!isFree)
-            return;
+		
+			DeathArea = CenterReference.position;
+			//If this not free (not touched) then not need continue
+			if (!isFree)
+				return;
 
-        //Return to default position with a smooth movement
-        StickRect.position = Vector3.SmoothDamp(StickRect.position, DeathArea, ref currentVelocity, smoothTime);
-        //When is in default position, we not need continue update this
-        if (Vector3.Distance(StickRect.position, DeathArea) < .1f)
-        {
-            isFree = false;
-            StickRect.position = DeathArea;
-        }
+			//Return to default position with a smooth movement
+			StickRect.position = Vector3.SmoothDamp(StickRect.position, DeathArea, ref currentVelocity, smoothTime);
+			//When is in default position, we not need continue update this
+			if (Vector3.Distance(StickRect.position, DeathArea) < .1f)
+			{
+				isFree = false;
+				StickRect.position = DeathArea;
+			}
+		
     }
 
     /// <summary>
@@ -95,6 +99,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     /// <param name="data"></param>
     public void OnPointerDown(PointerEventData data)
     {
+		if(gm.currentState == GameManager.GameState.Running){
         //Detect if is the default touchID
         if (lastId == -2)
         {
@@ -111,6 +116,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 stickImage.CrossFadeColor(PressColor, Duration, true, true);
             }
         }
+		}
     }
 
     /// <summary>

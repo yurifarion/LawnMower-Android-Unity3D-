@@ -11,7 +11,7 @@ public class Grass : MonoBehaviour
 		_gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 	}
 	
-	 void OnCollisionEnter(Collision collision)
+	 void OnTriggerEnter(Collider collision)
     {
 		Debug.Log("OBJECT:"+collision.gameObject.tag);
        if(collision.gameObject.tag == "Player"){

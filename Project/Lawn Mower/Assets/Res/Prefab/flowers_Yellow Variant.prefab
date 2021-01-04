@@ -19,6 +19,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1072199632802555458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2589122082192148065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02c9c3e09b95074b98fb8d41f2e9d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destructionFx: {fileID: 5545774427922170910, guid: a20c941595b8fba4a899b6804cf9f3b4,
+    type: 3}
+--- !u!65 &8084051600986529684
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2589122082192148065}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.011564461, y: 0.03414286, z: 0.053443275}
+  m_Center: {x: -0.0026857762, y: -0.0004334191, z: 0.02669737}
 --- !u!1001 &6314575732652330727
 PrefabInstance:
   m_ObjectHideFlags: 0

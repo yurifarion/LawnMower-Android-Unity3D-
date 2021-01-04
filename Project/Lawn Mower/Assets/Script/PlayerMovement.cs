@@ -7,15 +7,19 @@ public class PlayerMovement : MonoBehaviour
 	public bl_Joystick movementJoystick;
 	private Rigidbody rb;
 	private Animator anim;
+	private GameManager gm;
 	public float speed = 1f;
 	void Start(){
 		rb = this.gameObject.GetComponent<Rigidbody>();
 		anim = this.gameObject.GetComponent<Animator>();
+		gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 	}
     // Update is called once per frame
     void FixedUpdate()
     {
-       Move();
+		if(gm.currentState == GameManager.GameState.Running){
+			Move();
+	    }
     }
 	void Move(){
 		//Make Player move based on the Information of Horizontal and Vertical using RigidBody and speed

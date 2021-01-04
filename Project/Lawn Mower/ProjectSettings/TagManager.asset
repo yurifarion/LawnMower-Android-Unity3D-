@@ -9,6 +9,7 @@ TagManager:
   - GameManager
   - MowerMachine
   - Grass
+  - Particle
   layers:
   - Default
   - TransparentFX

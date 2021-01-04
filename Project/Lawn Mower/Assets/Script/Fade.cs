@@ -20,6 +20,12 @@ public class Fade : MonoBehaviour
 		if(level == 1){
 			Application.LoadLevel("level1");
 		}
+		if(level == 2){
+			Application.LoadLevel("level2");
+		}
+		if(level == 3){
+			Application.LoadLevel("level3");
+		}
 		if(level == 0){
 			Application.LoadLevel(Application.loadedLevel);
 		}

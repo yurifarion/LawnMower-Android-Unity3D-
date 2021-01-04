@@ -18,7 +18,19 @@ public class MenuControls : MonoBehaviour
 	public GameObject hear_btn;
 	public GameObject level_menu;
 	public GameObject aboutMe;
+	
+	//padlocks
+	public GameObject padlock_1;
+	public GameObject padlock_2;
 
+	void Start(){
+		if(PlayerPrefs.GetInt("level2",0) == 1){
+			padlock_1.SetActive(false);
+		}
+		if(PlayerPrefs.GetInt("level3",0) == 1){
+			padlock_2.SetActive(false);
+		}
+	}
 	public void Play(){
 		//remove the main menu canvas
 		music_toggle_btn.GetComponent<Animator>().SetBool("Entrance",false);
@@ -42,9 +54,11 @@ public class MenuControls : MonoBehaviour
 		
 	}
 	public void SetLevel(int level){
-		level_menu.GetComponent<Animator>().SetBool("Entrance",false);
-		PlayerPrefs.SetInt("Level",level);
-		fade.SetActive(true);
+		if(PlayerPrefs.GetInt("level"+level,0)==1 || level == 1){
+			level_menu.GetComponent<Animator>().SetBool("Entrance",false);
+			PlayerPrefs.SetInt("Level",level);
+			fade.SetActive(true);
+		}
 	}
 	
 	public void Music_On_Off(){
