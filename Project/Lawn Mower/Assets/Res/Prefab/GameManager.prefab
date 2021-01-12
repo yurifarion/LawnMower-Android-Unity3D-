@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9096288844802651215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9096288844802651214}
+  - component: {fileID: 9096288844802651213}
+  - component: {fileID: 9096288844802651212}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9096288844802651214
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9096288844802651215}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.975142, y: 3.4430203, z: -10.623144}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9096288844802651213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9096288844802651215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec374f833026a04380a819a9e4187bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScore: 0
+  currentState: 1
+  timerTimeLeft: 60
+  time_txt: {fileID: 0}
+  score_TXT: {fileID: 0}
+--- !u!114 &9096288844802651212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9096288844802651215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f46c0e4398566844aa7cdf515928e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music_off_img: {fileID: 21300000, guid: b43e10c225259434aba3fba1336bc11c, type: 3}
+  music_on_img: {fileID: 21300000, guid: 2c31a8d907ebdbc45b3a6020512fc9dd, type: 3}
+  fade: {fileID: 0}
+  music_toggle_btn: {fileID: 0}
+  resume_btn: {fileID: 0}
+  pause_menu: {fileID: 0}
+  pause_btn: {fileID: 0}
+  gameover_menu: {fileID: 0}
+  gamewin_menu: {fileID: 0}

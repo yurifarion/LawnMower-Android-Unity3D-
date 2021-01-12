@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 	private GameObject _player;
+	private PowerManager _pm;
 	public int currentScore = 0;
 	private int totalweeds=0;
 	public  enum GameState {Paused, Running,Gameover,Gamewin};
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 		_player = GameObject.FindGameObjectWithTag("Player");
+		_pm = GameObject.FindGameObjectWithTag("Canvas").GetComponent<PowerManager>();
 		GameObject[] allweeds = GameObject.FindGameObjectsWithTag("Grass");
 		totalweeds = allweeds.Length;
     }
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour
 		if(currentScore == totalweeds && currentState != GameState.Gamewin){
 			GameWin();
 		}
-		if(currentState == GameState.Running){
+		if(currentState == GameState.Running && _pm.currentPowerState != PowerManager.PowerState.frozen){
 			 timerTimeLeft -= Time.deltaTime;
 			 time_txt.text = "Timer: "+(int)timerTimeLeft+" s";
 			 if(timerTimeLeft < 10){

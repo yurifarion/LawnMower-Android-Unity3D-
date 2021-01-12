@@ -9,19 +9,39 @@ public class BeeAI : MonoBehaviour
     public float rotSpeed = 5;
     public float RotThreshold = 1; //Thresholds to stop moving
     public float DisThreshold = 1;
+	public float distanceToAttack = 10f;
+	public GameManager gm;
+	public GameObject beeOBJ;
     float Distance; //distance between the object and the target 
     Vector3 TargetDirection;
 	
    void Start(){
 	   target = GameObject.FindGameObjectWithTag("Player");
+	    gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
    }
 	//-2.456;-96.49;-15.191
     // Update is called once per frame
     void Update()
     {
+		if(gm.currentState == GameManager.GameState.Running){
          Rotate();
-         Move();
+		 if(Vector3.Distance(target.transform.position, transform.position) > distanceToAttack){
+			  Move();
+		 }
+        else{
+			//attack
+			beeOBJ.GetComponent<Animator>().ResetTrigger("Attack");
+			beeOBJ.GetComponent<Animator>().SetTrigger("Attack");
+			StartCoroutine(GameOver_Delay());
+		}
+		}
              
+    }
+	IEnumerator GameOver_Delay()
+    {
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(1);
+		gm.GameOver();
     }
 	void Rotate() //object is rotated around the y axis to look at or having the target in the back according to the object's charge sign
     {

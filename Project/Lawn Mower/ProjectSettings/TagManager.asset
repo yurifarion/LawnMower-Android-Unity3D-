@@ -10,6 +10,7 @@ TagManager:
   - MowerMachine
   - Grass
   - Particle
+  - Canvas
   layers:
   - Default
   - TransparentFX
