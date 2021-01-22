@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using GameAnalyticsSDK;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		GameAnalytics.Initialize();
 		_player = GameObject.FindGameObjectWithTag("Player");
 		_pm = GameObject.FindGameObjectWithTag("Canvas").GetComponent<PowerManager>();
 		GameObject[] allweeds = GameObject.FindGameObjectsWithTag("Grass");

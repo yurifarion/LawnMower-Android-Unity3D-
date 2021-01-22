@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GameAnalyticsSDK;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -92,6 +93,7 @@ public class InGameUI : MonoBehaviour
 		gamewin_menu.GetComponent<Animator>().SetBool("Entrance",false);
 	    PlayerPrefs.SetInt("level"+level,1);
 		PlayerPrefs.SetInt("Level",level);
+		//GameAnalytics.addDesignEventWithEventId("Kill:Sword:Robot");
 		fade.SetActive(true);
 	}
 

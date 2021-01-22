@@ -8,7 +8,9 @@ public class PlayerMovement : MonoBehaviour
 	private Rigidbody rb;
 	private Animator anim;
 	private GameManager gm;
+	public bool firstmove = false;
 	public float speed = 1f;
+	private Vector3 lastMovement = new Vector3(1,0,0);
 	void Start(){
 		rb = this.gameObject.GetComponent<Rigidbody>();
 		anim = this.gameObject.GetComponent<Animator>();
@@ -25,14 +27,28 @@ public class PlayerMovement : MonoBehaviour
 		//Make Player move based on the Information of Horizontal and Vertical using RigidBody and speed
 		if(movementJoystick.Horizontal != 0 && movementJoystick.Vertical !=0){
 			Vector3 movement = new Vector3(movementJoystick.Horizontal,0f,movementJoystick.Vertical);
+			lastMovement = movement;
 			rb.MovePosition(transform.position + movement.normalized * speed * Time.deltaTime);
 			//look at the direction of the movement
 			 transform.LookAt(transform.position + movement);
 			 //turn animation to Walking mode
 			 anim.SetBool("Walk",true);
+			 
+			 if(firstmove == false) firstmove = true;
+		 }
+		 else{
+			 if(firstmove){
+				Vector3 movement = lastMovement;
+				rb.MovePosition(transform.position + movement.normalized * speed * Time.deltaTime);
+				//look at the direction of the movement
+				 transform.LookAt(transform.position + movement);
+				 //turn animation to Walking mode
+				 anim.SetBool("Walk",true);
+			 }
+			 else anim.SetBool("Walk",false);
 		 }
 		 //Turn animation to Idle 
-		 else anim.SetBool("Walk",false);
+		 //else 
 	}
 	
 	
