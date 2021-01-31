@@ -11,6 +11,7 @@ TagManager:
   - Grass
   - Particle
   - Canvas
+  - Admob
   layers:
   - Default
   - TransparentFX

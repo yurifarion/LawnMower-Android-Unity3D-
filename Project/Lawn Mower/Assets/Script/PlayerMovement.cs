@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-		if(gm.currentState == GameManager.GameState.Running){
+		if(gm.currentState == GameManager.GameState.Running ||gm.currentState == GameManager.GameState.standby){
 			Move();
 	    }
     }
@@ -34,7 +34,10 @@ public class PlayerMovement : MonoBehaviour
 			 //turn animation to Walking mode
 			 anim.SetBool("Walk",true);
 			 
-			 if(firstmove == false) firstmove = true;
+			 if(firstmove == false){
+				 firstmove = true;
+				gm.currentState = GameManager.GameState.Running;
+			 }
 		 }
 		 else{
 			 if(firstmove){

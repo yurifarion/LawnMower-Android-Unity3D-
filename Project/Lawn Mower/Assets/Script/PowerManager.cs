@@ -23,8 +23,19 @@ public class PowerManager : MonoBehaviour
 	public GameObject player_model;
 	public GameObject mowerModel;
 	
+	public Slider powerTimerSlide;
+		    float powertimer = 0.0f;
+	public float powerDuration = 5f;
+	public bool timer_on = false;
+	
 	public GameObject run_particle_effect;
 	public GameObject run_trail;
+	
+	//sounds
+	public AudioSource audioPowerSource;
+	public AudioClip boomPowerClip;
+	public AudioClip enlargeClip;
+	public AudioClip freezeClip;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +43,13 @@ public class PowerManager : MonoBehaviour
         
     }
 	public void StartHighSpeed(){
+		if(audioPowerSource.isPlaying==false){
+			audioPowerSource.clip = boomPowerClip;
+			audioPowerSource.Play();
+		}
+		powerTimerSlide.gameObject.SetActive(true);
+		powertimer = 0;
+		timer_on = true;
 		if(isRunPowerAvailable){
 			Instantiate(run_particle_effect,_player.transform.position,_player.transform.rotation);
 			run_trail.SetActive(true);
@@ -42,7 +60,7 @@ public class PowerManager : MonoBehaviour
 	}
 	IEnumerator RunPower()
     {
-		 yield return new WaitForSeconds(10f);
+		 yield return new WaitForSeconds(powerDuration);
 		 currentPowerState = PowerState.none;
 		 	_player.GetComponent<PlayerMovement>().speed = 5f;
 			_player.GetComponent<Animator>().SetFloat("Speed",0);
@@ -50,6 +68,13 @@ public class PowerManager : MonoBehaviour
 		 
 	}
 	public void StartGiantMower(){
+		if(audioPowerSource.isPlaying==false){
+			audioPowerSource.clip = enlargeClip;
+			audioPowerSource.Play();
+		}
+		powerTimerSlide.gameObject.SetActive(true);
+		powertimer = 0;
+		timer_on = true;
 		if(isTime_gianteMowerAvailable){
 			currentPowerState = PowerState.giantMower;
 			mowerModel.GetComponent<MowerEnlarger>().Enlarge();
@@ -58,13 +83,16 @@ public class PowerManager : MonoBehaviour
 	}
 	IEnumerator EnlargeMower()
     {
-		 yield return new WaitForSeconds(10f);
+		 yield return new WaitForSeconds(powerDuration);
 		 currentPowerState = PowerState.none;
 		 mowerModel.GetComponent<MowerEnlarger>().Shrink();
 		 
 	}
 	
 	public void StartWallfree(){
+		powerTimerSlide.gameObject.SetActive(true);
+		powertimer = 0;
+		timer_on = true;
 		if(isWallFreeAvailable){
 			currentPowerState = PowerState.wallfree;
 			StartCoroutine(PowerColdDown());
@@ -89,7 +117,13 @@ public class PowerManager : MonoBehaviour
 		 }
 	}
 	public void StartPowerFrozen(){
-		
+		if(audioPowerSource.isPlaying==false){
+			audioPowerSource.clip = freezeClip;
+			audioPowerSource.Play();
+		}
+		powerTimerSlide.gameObject.SetActive(true);
+		powertimer = 0;
+		timer_on = true;
 		if(isTime_freezeAvailable){
 			frozen_particles.SetActive(true);
 			frozen_UI.SetActive(true);
@@ -103,8 +137,8 @@ public class PowerManager : MonoBehaviour
 	}
 	IEnumerator PowerColdDown()
     {
-        //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(10);
+        //yield on a new YieldInstruction that waits for powerDuration seconds.
+        yield return new WaitForSeconds(powerDuration);
 		currentPowerState = PowerState.none;
 		
 		//Stop Frozen Powers
@@ -115,6 +149,18 @@ public class PowerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if(timer_on == true){
+			if(powertimer >= powerDuration){
+				timer_on = false;
+				powertimer = 0;
+				powerTimerSlide.gameObject.SetActive(false);
+			}
+			powertimer += Time.deltaTime;
+			float seconds = powertimer % 60;
+			powerTimerSlide.value = (1 - seconds/powerDuration);
+		}
+		
+		
         if(isRunPowerAvailable){
 		  var tempColor = runPower_icon.color;
           tempColor.a = 1f;

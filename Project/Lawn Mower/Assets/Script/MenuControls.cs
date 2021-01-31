@@ -18,12 +18,18 @@ public class MenuControls : MonoBehaviour
 	public GameObject hear_btn;
 	public GameObject level_menu;
 	public GameObject aboutMe;
+	public GoogleAdMobController admob;
 	
 	//padlocks
 	public GameObject padlock_1;
 	public GameObject padlock_2;
-
+	
+	//sound
+	public AudioSource button_sound;
+	public AudioClip btn_ok_clip;
+	public AudioClip btn_not_clip;
 	void Start(){
+		admob.RequestAndLoadRewardedInterstitialAd();
 		if(PlayerPrefs.GetInt("level2",0) == 1){
 			padlock_1.SetActive(false);
 		}
@@ -31,7 +37,21 @@ public class MenuControls : MonoBehaviour
 			padlock_2.SetActive(false);
 		}
 	}
+	 void PlayOkSound(){
+	   if(button_sound.isPlaying == false){
+		   button_sound.clip = btn_ok_clip;
+		   button_sound.Play();
+	   }
+   }
+   void PlayNotSound(){
+	   
+	   if(button_sound.isPlaying == false){
+		   button_sound.clip = btn_not_clip;
+		   button_sound.Play();
+	   }
+   }
 	public void Play(){
+		PlayOkSound();
 		//remove the main menu canvas
 		music_toggle_btn.GetComponent<Animator>().SetBool("Entrance",false);
 		title.GetComponent<Animator>().SetBool("Entrance",false);
@@ -43,6 +63,7 @@ public class MenuControls : MonoBehaviour
 		else level_menu.GetComponent<Animator>().SetBool("Entrance",true);
 	}
 	public void goToMainMenu(){
+		PlayNotSound();
 		level_menu.GetComponent<Animator>().SetBool("Entrance",false);
 		aboutMe.GetComponent<Animator>().SetBool("Entrance",false);
 		//remove the main menu canvas
@@ -54,6 +75,7 @@ public class MenuControls : MonoBehaviour
 		
 	}
 	public void SetLevel(int level){
+		PlayOkSound();
 		if(PlayerPrefs.GetInt("level"+level,0)==1 || level == 1){
 			level_menu.GetComponent<Animator>().SetBool("Entrance",false);
 			PlayerPrefs.SetInt("Level",level);
@@ -68,27 +90,34 @@ public class MenuControls : MonoBehaviour
 			music_toggle_btn.GetComponent<Image>().sprite = music_off_img;
 		}
 		else if(AudioListener.volume < 1){
+			PlayOkSound();
 			AudioListener.volume = 1;
 			music_toggle_btn.GetComponent<Image>().sprite = music_on_img;
 		}
 		
 	}
 	public void Intagram_GO(){
+		PlayOkSound();
 		Application.OpenURL("https://www.instagram.com/yuriddeveloper");
 	}
 	public void Twitter_GO(){
+		PlayOkSound();
 		Application.OpenURL("https://twitter.com/yuriddeveloper");
 	}
 	public void Youtube_GO(){
+		PlayOkSound();
 		Application.OpenURL("https://www.youtube.com/channel/UC4J8D3fTU6Ot83xfg3NRXqg");
 	}
 	public void MoreGames(){
+		PlayOkSound();
 		Application.OpenURL("https://play.google.com/store/apps/developer?id=yurifarion");
 	}
 	public void Share(){
+		PlayOkSound();
 		StartCoroutine(ShareAndroidText());
 	}
 	public void Heart(){
+		PlayOkSound();
 		//remove the main menu canvas
 		music_toggle_btn.GetComponent<Animator>().SetBool("Entrance",false);
 		title.GetComponent<Animator>().SetBool("Entrance",false);

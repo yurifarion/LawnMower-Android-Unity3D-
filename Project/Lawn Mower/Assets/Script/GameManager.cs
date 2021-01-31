@@ -10,14 +10,28 @@ public class GameManager : MonoBehaviour
 	private PowerManager _pm;
 	public int currentScore = 0;
 	private int totalweeds=0;
-	public  enum GameState {Paused, Running,Gameover,Gamewin};
-	public GameState currentState = GameState.Running;
+	public  enum GameState {Paused, Running,Gameover,Gamewin,standby};
+	public GameState currentState = GameState.standby;
 	private GameObject[] allparticles;
 	
 	public float timerTimeLeft = 60;
 	public Text time_txt;
 	//UI
 	public Text score_TXT;
+	
+	public enum PresentState  {dontSpawn,SpawnNearPlayer,SpawnRandom};
+	public GameObject presentPrefab;
+	public PresentState currentPresentState;
+	public bool powerSpawned = false;
+	public Transform presentSpawnMap;
+	
+	//Sounds
+	public AudioSource lawnMowerOn;
+	public AudioSource lawnMowerCut;
+	public AudioClip lawnMowerCut_1;
+	public AudioClip lawnMowerCut_2;
+	public AudioClip lawnMowerCut_3;
+	public AudioClip lawnMowerCut_4;
 	
     // Start is called before the first frame update
     void Start()
@@ -27,8 +41,35 @@ public class GameManager : MonoBehaviour
 		_pm = GameObject.FindGameObjectWithTag("Canvas").GetComponent<PowerManager>();
 		GameObject[] allweeds = GameObject.FindGameObjectsWithTag("Grass");
 		totalweeds = allweeds.Length;
+		
+		if(currentPresentState == PresentState.SpawnNearPlayer && powerSpawned == false){
+			Vector3 pos = _player.transform.position;
+			pos += new Vector3(-0.7f,6,6);
+			Instantiate(presentPrefab,pos,this.transform.rotation);
+			powerSpawned = true;
+		}
     }
+	public void SpawnPowerReward(){
+		GetComponent<InGameUI>().Resume();
+		if(powerSpawned == false){
+			Vector3 pos = _player.transform.position;
+			pos += new Vector3(-0.7f,6,6);
+			Instantiate(presentPrefab,pos,this.transform.rotation);
+			powerSpawned = true;
+		}
+	}
+	void PlayCutSound(){
+		if(lawnMowerCut.isPlaying == false){
+			int rand = Random.Range(1, 5);
+			if(rand == 1 ) lawnMowerCut.clip = lawnMowerCut_1 ;
+			if(rand == 2 ) lawnMowerCut.clip = lawnMowerCut_2 ;
+			if(rand == 3 ) lawnMowerCut.clip = lawnMowerCut_3 ;
+			if(rand == 4 ) lawnMowerCut.clip = lawnMowerCut_4 ;
+			lawnMowerCut.Play();
+		}
+	}
 	public void AddScore(int i){
+		PlayCutSound();
 		currentScore+=i;
 		if(currentScore < 10) score_TXT.text =""+currentScore+"/"+totalweeds;
 		else if(currentScore >= 10 && currentScore < 100) score_TXT.text =""+currentScore+"/"+totalweeds;
@@ -45,6 +86,13 @@ public class GameManager : MonoBehaviour
 		
 	}
 	void Update(){
+		if(currentState == GameState.Running){
+			if(lawnMowerOn.isPlaying == false)lawnMowerOn.Play();
+			
+		}
+		else{
+			lawnMowerOn.Pause();
+		}
 		if(currentScore == totalweeds && currentState != GameState.Gamewin){
 			GameWin();
 		}
@@ -59,6 +107,7 @@ public class GameManager : MonoBehaviour
 				 
 				 GameOver();
 			 }
+			 
 		}
 	}
 	public void GameOver(){

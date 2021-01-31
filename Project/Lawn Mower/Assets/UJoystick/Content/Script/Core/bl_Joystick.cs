@@ -99,7 +99,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     /// <param name="data"></param>
     public void OnPointerDown(PointerEventData data)
     {
-		if(gm.currentState == GameManager.GameState.Running){
+		if(gm.currentState == GameManager.GameState.Running || gm.currentState == GameManager.GameState.standby){
         //Detect if is the default touchID
         if (lastId == -2)
         {
