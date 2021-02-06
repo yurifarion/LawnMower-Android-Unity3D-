@@ -16,8 +16,16 @@ public class Flower : MonoBehaviour
 	 void OnTriggerEnter(Collider collision)
     {
 		if(_pm.currentPowerState != PowerManager.PowerState.wallfree){
-			_gm.GameOver();
+			 Quaternion rotation = Quaternion.Euler(-90, 0, 0);
+		     Instantiate(destructionFx,transform.position,rotation);
+		     GetComponent<MeshRenderer>().enabled = false;
+			StartCoroutine(DestructionDelay(2.0f));
 		}
     }
-    
+     // suspend execution for waitTime seconds
+    IEnumerator DestructionDelay(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+       _gm.GameOver();
+    }
 }

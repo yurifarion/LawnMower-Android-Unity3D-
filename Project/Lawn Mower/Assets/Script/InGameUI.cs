@@ -31,6 +31,10 @@ public class InGameUI : MonoBehaviour
 	public AudioClip gameWinclip;
 	public AudioClip gameLoseclip;
 	
+	public PowerInMap _powerInMap;
+	
+	public bool isAdAvailable = true;
+	
    public void Resume(){
 		PlayOkSound();
 	    gm.ResumeParticles();
@@ -94,20 +98,27 @@ public class InGameUI : MonoBehaviour
 	}
 	void RandGift(){
 		int rand = Random.Range(0, 4); // see if gift will show up
-
+		
 	  if(rand == 0){
+		   
 		  Analytics.CustomEvent("Show Reward Ad");
 		   gm.currentState = GameManager.GameState.Paused;
 		   gm.PauseParticles();
 		   pause_btn.SetActive(false);
 		  ad_menu.SetActive(true);
 	  }
+	  else{
+		  
+		  _powerInMap.activated = true;
+		  
+	  }
 	}
    public void Start(){
 	   
 	   
 	   gm = this.gameObject.GetComponent<GameManager>();
-	   RandGift();
+	   _powerInMap = GameObject.FindGameObjectWithTag("PowerInMap").GetComponent<PowerInMap>();
+	   if(isAdAvailable) RandGift();
 	   ad_controller.LoadAd();
 	   if(AudioListener.volume > 0){
 			music_toggle_btn.GetComponent<Image>().sprite = music_on_img;
@@ -136,6 +147,9 @@ public class InGameUI : MonoBehaviour
 	   }
    }
    public void goGameWin(){
+	   int level = int.Parse(Application.loadedLevelName.Replace("level", "")) + 1;
+	   PlayerPrefs.SetInt("level"+level,1);
+	   Analytics.CustomEvent(Application.loadedLevelName+" Passed");
 	     music.Pause();
 	    PlayGameWinSound();
 	   if(gm.currentState == GameManager.GameState.Gamewin){
@@ -151,11 +165,14 @@ public class InGameUI : MonoBehaviour
 	   }
    }
    public void SetLevel(int level){
+	   if(level > 0){
+		   level = int.Parse(Application.loadedLevelName.Replace("level", "")) + 1;
+	   }
+	   Analytics.CustomEvent("Go to"+level);
 	    PlayOkSound();
 	    pause_menu.GetComponent<Animator>().SetBool("Entrance",false);
 		gameover_menu.GetComponent<Animator>().SetBool("Entrance",false);
 		gamewin_menu.GetComponent<Animator>().SetBool("Entrance",false);
-	    PlayerPrefs.SetInt("level"+level,1);
 		PlayerPrefs.SetInt("Level",level);
 		//GameAnalytics.addDesignEventWithEventId("Kill:Sword:Robot");
 		fade.SetActive(true);

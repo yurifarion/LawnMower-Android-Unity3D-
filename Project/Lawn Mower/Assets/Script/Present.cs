@@ -19,6 +19,7 @@ public class Present : MonoBehaviour
 		if(isPowerRandom){
 			
 			powerkind = (Random.Range(1, 5));
+		}
 			switch(powerkind){
 				case 1:
 				choosenPower = pickUpPrefab_enlarge;
@@ -36,7 +37,7 @@ public class Present : MonoBehaviour
 				choosenPower = pickUpPrefab_enlarge;
 				break;
 			}
-		}
+		
     }
 
    void OnCollisionEnter(Collision collision)

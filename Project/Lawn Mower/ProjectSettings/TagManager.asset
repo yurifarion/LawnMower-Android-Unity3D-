@@ -12,6 +12,9 @@ TagManager:
   - Particle
   - Canvas
   - Admob
+  - LevelMenuBtn
+  - Fade
+  - PowerInMap
   layers:
   - Default
   - TransparentFX

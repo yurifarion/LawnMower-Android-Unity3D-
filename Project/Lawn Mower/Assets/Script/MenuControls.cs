@@ -20,6 +20,8 @@ public class MenuControls : MonoBehaviour
 	public GameObject aboutMe;
 	public GoogleAdMobController admob;
 	
+	public int levelmenuOrder = 1;
+	public List<GameObject> listOfLevelMenu = new List<GameObject>();
 	//padlocks
 	public GameObject padlock_1;
 	public GameObject padlock_2;
@@ -29,6 +31,7 @@ public class MenuControls : MonoBehaviour
 	public AudioClip btn_ok_clip;
 	public AudioClip btn_not_clip;
 	void Start(){
+		PlayerPrefs.SetInt("level17",1);
 		admob.RequestAndLoadRewardedInterstitialAd();
 		if(PlayerPrefs.GetInt("level2",0) == 1){
 			padlock_1.SetActive(false);
@@ -37,12 +40,38 @@ public class MenuControls : MonoBehaviour
 			padlock_2.SetActive(false);
 		}
 	}
-	 void PlayOkSound(){
+	public void PlayOkSound(){
 	   if(button_sound.isPlaying == false){
 		   button_sound.clip = btn_ok_clip;
 		   button_sound.Play();
 	   }
    }
+   public void EnableLevels(){
+	   
+   }
+   public void goToNextStage(){
+	   PlayOkSound();
+	   if(levelmenuOrder < 5){
+		   listOfLevelMenu[levelmenuOrder - 1].GetComponent<Animator>().SetBool("Entrance",false);
+		   listOfLevelMenu[levelmenuOrder].GetComponent<Animator>().SetBool("Entrance",true);
+		   if(!listOfLevelMenu[levelmenuOrder].activeSelf)listOfLevelMenu[levelmenuOrder].SetActive(true);
+		   else listOfLevelMenu[levelmenuOrder].GetComponent<Animator>().SetBool("Entrance",true);
+		   levelmenuOrder++;
+	   }
+	  
+	    
+	   
+   }
+public void goToPreviousStage(){
+		PlayNotSound();
+	   if(levelmenuOrder > 1){
+		   listOfLevelMenu[levelmenuOrder - 1].GetComponent<Animator>().SetBool("Entrance",false);
+		   listOfLevelMenu[levelmenuOrder - 2].GetComponent<Animator>().SetBool("Entrance",true);
+		   if(!listOfLevelMenu[levelmenuOrder - 2].activeSelf)listOfLevelMenu[levelmenuOrder].SetActive(true);
+		   else listOfLevelMenu[levelmenuOrder - 2].GetComponent<Animator>().SetBool("Entrance",true);
+		   levelmenuOrder--;
+	   }
+   } 
    void PlayNotSound(){
 	   
 	   if(button_sound.isPlaying == false){
@@ -64,7 +93,7 @@ public class MenuControls : MonoBehaviour
 	}
 	public void goToMainMenu(){
 		PlayNotSound();
-		level_menu.GetComponent<Animator>().SetBool("Entrance",false);
+		listOfLevelMenu[levelmenuOrder - 1].GetComponent<Animator>().SetBool("Entrance",false);
 		aboutMe.GetComponent<Animator>().SetBool("Entrance",false);
 		//remove the main menu canvas
 		music_toggle_btn.GetComponent<Animator>().SetBool("Entrance",true);
@@ -72,6 +101,7 @@ public class MenuControls : MonoBehaviour
 		share_btn.GetComponent<Animator>().SetBool("Entrance",true);
 		play_btn.GetComponent<Animator>().SetBool("Entrance",true);
 		hear_btn.GetComponent<Animator>().SetBool("Entrance",true);
+		levelmenuOrder = 1;
 		
 	}
 	public void SetLevel(int level){
@@ -82,7 +112,9 @@ public class MenuControls : MonoBehaviour
 			fade.SetActive(true);
 		}
 	}
-	
+	public void ActiveFade(){
+		fade.SetActive(true);
+	}
 	public void Music_On_Off(){
 		
 		if(AudioListener.volume > 0){

@@ -127,5 +127,9 @@ public class GameManager : MonoBehaviour
 			}
 		
 	}
+	public void StartPlayerMovement(){
+		currentState = GameState.Running;
+		_player.transform.parent.gameObject.GetComponent<PlayerMovement>().firstmove = true;
+	}
 	
 }

@@ -30,7 +30,7 @@ public class PowerManager : MonoBehaviour
 	
 	public GameObject run_particle_effect;
 	public GameObject run_trail;
-	
+	private GameManager _gm;
 	//sounds
 	public AudioSource audioPowerSource;
 	public AudioClip boomPowerClip;
@@ -40,9 +40,10 @@ public class PowerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 	public void StartHighSpeed(){
+		_gm.StartPlayerMovement();
 		if(audioPowerSource.isPlaying==false){
 			audioPowerSource.clip = boomPowerClip;
 			audioPowerSource.Play();
@@ -60,6 +61,7 @@ public class PowerManager : MonoBehaviour
 	}
 	IEnumerator RunPower()
     {
+		
 		 yield return new WaitForSeconds(powerDuration);
 		 currentPowerState = PowerState.none;
 		 	_player.GetComponent<PlayerMovement>().speed = 5f;
@@ -68,6 +70,7 @@ public class PowerManager : MonoBehaviour
 		 
 	}
 	public void StartGiantMower(){
+		_gm.StartPlayerMovement();
 		if(audioPowerSource.isPlaying==false){
 			audioPowerSource.clip = enlargeClip;
 			audioPowerSource.Play();
@@ -90,6 +93,7 @@ public class PowerManager : MonoBehaviour
 	}
 	
 	public void StartWallfree(){
+		_gm.StartPlayerMovement();
 		powerTimerSlide.gameObject.SetActive(true);
 		powertimer = 0;
 		timer_on = true;
@@ -102,7 +106,8 @@ public class PowerManager : MonoBehaviour
 	
 	IEnumerator PowerwallfreeOff()
     {
-		 yield return new WaitForSeconds(0.5f);
+		
+		 yield return new WaitForSeconds(0.1f);
 		 if(currentPowerState == PowerState.wallfree){
 			 player_model.SetActive(false);
 			 StartCoroutine(PowerwallfreeOn());
@@ -110,13 +115,14 @@ public class PowerManager : MonoBehaviour
 	}
 	IEnumerator PowerwallfreeOn()
     {
-		 yield return new WaitForSeconds(0.5f);
+		 yield return new WaitForSeconds(0.1f);
 		 if(currentPowerState == PowerState.wallfree){
 			 player_model.SetActive(true);
 			 StartCoroutine(PowerwallfreeOff());
 		 }
 	}
 	public void StartPowerFrozen(){
+		_gm.StartPlayerMovement();
 		if(audioPowerSource.isPlaying==false){
 			audioPowerSource.clip = freezeClip;
 			audioPowerSource.Play();
@@ -149,7 +155,10 @@ public class PowerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(timer_on == true){
+		 if(currentPowerState != PowerState.wallfree) mowerModel.SetActive(true);
+			 
+		 
+		if(timer_on == true && _gm.currentState == GameManager.GameState.Running){
 			if(powertimer >= powerDuration){
 				timer_on = false;
 				powertimer = 0;

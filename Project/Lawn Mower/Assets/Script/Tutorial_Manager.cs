@@ -4,22 +4,8 @@ using UnityEngine;
 
 public class Tutorial_Manager : MonoBehaviour
 {
-	public GameObject alert_arrow_analogic_Movement;
-	
-	
-	public GameObject alert_arrow_power;
-	
-	
-	public GameObject alert_arrow_pause;
-	
-	
-	public GameObject alert_arrow_Timer;
-	
-	
-	public GameObject alert_arrow_goal;
-	
-
 	public GameObject tutorialFade;
+	public List<GameObject> listaDeLayers = new List<GameObject>();
 	
 	private GameManager gm;
 	
@@ -31,15 +17,10 @@ public class Tutorial_Manager : MonoBehaviour
        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 	void allfalse(){
-		alert_arrow_analogic_Movement.SetActive(false);
 		
-		alert_arrow_power.SetActive(false);
-		
-		alert_arrow_pause.SetActive(false);
-		
-		alert_arrow_goal.SetActive(false);
-		
-		alert_arrow_Timer.SetActive(false);
+		foreach(GameObject g in listaDeLayers){
+			g.SetActive(false);
+		}
 		
 	}
 	void onEditor(){
@@ -48,41 +29,16 @@ public class Tutorial_Manager : MonoBehaviour
                 {
 								   
 							tutorialLayer++;
-							switch(tutorialLayer){
-							case 1:
-									allfalse();
-									alert_arrow_analogic_Movement.SetActive(true);	
-							break;
-							case 2:
-									allfalse();
-									alert_arrow_power.SetActive(true);		
-							break;
-							case 3:
-									allfalse();
-									alert_arrow_pause.SetActive(true);
-							break;
-							case 4:
-									allfalse();
-									alert_arrow_Timer.SetActive(true);
-							break;
-							case 5:
-									allfalse();
-									alert_arrow_goal.SetActive(true);
-							break;
-							default:
-									allfalse();
-									alert_arrow_goal.SetActive(true);
-							break;
-							
-						}
+							allfalse();
+							if(listaDeLayers.Count > (tutorialLayer -1))listaDeLayers[tutorialLayer -1].SetActive(true);
 				}
 	}
     // Update is called once per frame
     void Update()
     {
-		if(tutorialLayer == 6){
+		if(tutorialLayer == listaDeLayers.Count+1){
 			Destroy(tutorialFade);
-			gm.currentState = GameManager.GameState.Running;
+			gm.currentState = GameManager.GameState.standby;
 			Destroy(this);
 		}else{
 			gm.currentState = GameManager.GameState.Paused;
@@ -95,36 +51,10 @@ public class Tutorial_Manager : MonoBehaviour
         {
 			  Touch touch = Input.GetTouch(0);
 			  if (touch.phase == TouchPhase.Began)
-                {
-								   
+                {   
 							tutorialLayer++;
-							switch(tutorialLayer){
-							case 1:
-									allfalse();
-									alert_arrow_analogic_Movement.SetActive(true);	
-							break;
-							case 2:
-									allfalse();
-									alert_arrow_power.SetActive(true);		
-							break;
-							case 3:
-									allfalse();
-									alert_arrow_pause.SetActive(true);
-							break;
-							case 4:
-									allfalse();
-									alert_arrow_Timer.SetActive(true);
-							break;
-							case 5:
-									allfalse();
-									alert_arrow_goal.SetActive(true);
-							break;
-							default:
-									allfalse();
-									alert_arrow_goal.SetActive(true);
-							break;
-							
-						}
+							allfalse();
+							listaDeLayers[tutorialLayer -1].SetActive(true);
 				}
 			
 		}
