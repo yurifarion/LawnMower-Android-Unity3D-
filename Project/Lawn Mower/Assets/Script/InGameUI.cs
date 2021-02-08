@@ -97,8 +97,9 @@ public class InGameUI : MonoBehaviour
 		
 	}
 	void RandGift(){
+		if(GameObject.FindGameObjectWithTag("PowerInMap").GetComponent<PowerInMap>() != null)_powerInMap = GameObject.FindGameObjectWithTag("PowerInMap").GetComponent<PowerInMap>();
 		int rand = Random.Range(0, 4); // see if gift will show up
-		
+		Debug.Log("rand:"+rand);
 	  if(rand == 0){
 		   
 		  Analytics.CustomEvent("Show Reward Ad");
@@ -113,11 +114,13 @@ public class InGameUI : MonoBehaviour
 		  
 	  }
 	}
+	
    public void Start(){
 	   
 	   
 	   gm = this.gameObject.GetComponent<GameManager>();
-	   _powerInMap = GameObject.FindGameObjectWithTag("PowerInMap").GetComponent<PowerInMap>();
+	   
+	   
 	   if(isAdAvailable) RandGift();
 	   ad_controller.LoadAd();
 	   if(AudioListener.volume > 0){
