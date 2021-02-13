@@ -56,6 +56,7 @@ public class PowerManager : MonoBehaviour
 			run_trail.SetActive(true);
 			_player.GetComponent<PlayerMovement>().speed = 10f;
 			_player.GetComponent<Animator>().SetFloat("Speed",1);
+			isRunPowerAvailable = false;
 			StartCoroutine(RunPower());
 		}
 	}
@@ -81,6 +82,7 @@ public class PowerManager : MonoBehaviour
 		if(isTime_gianteMowerAvailable){
 			currentPowerState = PowerState.giantMower;
 			mowerModel.GetComponent<MowerEnlarger>().Enlarge();
+			isTime_gianteMowerAvailable = false;
 			StartCoroutine(EnlargeMower());
 		}
 	}
@@ -99,6 +101,7 @@ public class PowerManager : MonoBehaviour
 		timer_on = true;
 		if(isWallFreeAvailable){
 			currentPowerState = PowerState.wallfree;
+			isWallFreeAvailable = false;
 			StartCoroutine(PowerColdDown());
 			StartCoroutine(PowerwallfreeOn());
 		}
@@ -138,6 +141,7 @@ public class PowerManager : MonoBehaviour
 			tempColor.a = 0.5f;
 			runPower_icon.color = tempColor;
 			currentPowerState = PowerState.frozen;
+			isTime_freezeAvailable = false;
 			StartCoroutine(PowerColdDown());
 		}
 	}

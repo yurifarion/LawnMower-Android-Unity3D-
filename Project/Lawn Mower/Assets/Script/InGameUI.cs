@@ -17,6 +17,7 @@ public class InGameUI : MonoBehaviour
 	public GameObject resume_btn;
 	public GameObject pause_menu;
 	public GameObject ad_menu;
+	public GameObject ad_main;
 	public GameObject pause_btn;
 	public GameObject gameover_menu;
 	public GameObject gamewin_menu;
@@ -97,10 +98,10 @@ public class InGameUI : MonoBehaviour
 		
 	}
 	void RandGift(){
-		if(GameObject.FindGameObjectWithTag("PowerInMap").GetComponent<PowerInMap>() != null)_powerInMap = GameObject.FindGameObjectWithTag("PowerInMap").GetComponent<PowerInMap>();
+		
 		int rand = Random.Range(0, 4); // see if gift will show up
 		Debug.Log("rand:"+rand);
-	  if(rand == 0){
+	  if(rand > 1){
 		   
 		  Analytics.CustomEvent("Show Reward Ad");
 		   gm.currentState = GameManager.GameState.Paused;
@@ -109,7 +110,7 @@ public class InGameUI : MonoBehaviour
 		  ad_menu.SetActive(true);
 	  }
 	  else{
-		  
+		  if(GameObject.FindGameObjectWithTag("PowerInMap").GetComponent<PowerInMap>() != null)_powerInMap = GameObject.FindGameObjectWithTag("PowerInMap").GetComponent<PowerInMap>();
 		  _powerInMap.activated = true;
 		  
 	  }
@@ -120,7 +121,7 @@ public class InGameUI : MonoBehaviour
 	   
 	   gm = this.gameObject.GetComponent<GameManager>();
 	   
-	   
+	   ad_main = ad_menu.transform.Find("Main").gameObject;
 	   if(isAdAvailable) RandGift();
 	   ad_controller.LoadAd();
 	   if(AudioListener.volume > 0){
@@ -131,6 +132,7 @@ public class InGameUI : MonoBehaviour
 		}
    }
    public void ShowReward(){
+		ad_main.SetActive(false);
 		PlayOkSound();
 	    ad_controller.ShowAd();
    }

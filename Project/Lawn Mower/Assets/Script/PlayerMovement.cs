@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 	private GameManager gm;
 	public bool firstmove = false;
 	public float speed = 1f;
-	private Vector3 lastMovement = new Vector3(0,0,5);
+	private float lastAngle = 0;
 
 	void Start(){
 		rb = this.gameObject.GetComponent<Rigidbody>();
@@ -30,14 +30,11 @@ public class PlayerMovement : MonoBehaviour
 		//Make Player move based on the Information of Horizontal and Vertical using RigidBody and speed
 		if(movementJoystick.Horizontal != 0 && movementJoystick.Vertical !=0){
 			Vector3 movement = new Vector3(movementJoystick.Horizontal,0f,movementJoystick.Vertical);
-			if(movement.magnitude > 1)lastMovement = movement;
-			
-			rb.MovePosition(transform.position + lastMovement.normalized * speed * Time.deltaTime);
-			//look at the direction of the movement
-			 transform.LookAt(transform.position + lastMovement);
-			 //turn animation to Walking mode
-			 anim.SetBool("Walk",true);
-			 
+			 if(movement.magnitude > 3){
+			    lastAngle = AngleBetweenVector2(new Vector3(0,75,0), movementJoystick.StickRect.position - movementJoystick.DeathArea);
+			 }
+			 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, -lastAngle, 0f), 7f * Time.deltaTime);
+			 transform.Translate(Vector3.forward * speed * Time.deltaTime);
 			 if(firstmove == false){
 				 firstmove = true;
 				gm.currentState = GameManager.GameState.Running;
@@ -45,19 +42,32 @@ public class PlayerMovement : MonoBehaviour
 		 }
 		 else{
 			 if(firstmove){
-				Vector3 movement = lastMovement;
-				rb.MovePosition(transform.position + movement.normalized * speed * Time.deltaTime);
-				//look at the direction of the movement
-				 transform.LookAt(transform.position + movement);
-				 //turn animation to Walking mode
-				 anim.SetBool("Walk",true);
+				 float angle = lastAngle;
+				 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, -angle, 0f), 5f * Time.deltaTime);
+			     transform.Translate(Vector3.forward * speed * Time.deltaTime);
 			 }
 			 else anim.SetBool("Walk",false);
 		 }
 		 //Turn animation to Idle 
 		 //else 
+			 
+		 
+		 //Quaternion angleMove = Quaternion.Euler(new Vector3(0,movementJoystick.Horizontal,0)* 50 * Time.deltaTime);
+		 //GetComponent<Rigidbody>().MoveRotation(GetComponent<Rigidbody>().rotation * angleMove);
 	}
-	
+	private float AngleBetweenVector2(Vector3 vec1, Vector3 vec2)
+	{
+         float angleRad = Mathf.Atan2(vec1.y - vec2.y, vec1.x - vec2.x);
+          // Get Angle in Degrees
+         float angleDeg = (180 / Mathf.PI) * angleRad;
+		 
+		 if(angleDeg > 90){
+			  angleRad = Mathf.Atan2(vec2.y - vec1.y, vec2.x - vec1.x);
+          // Get Angle in Degrees
+          angleDeg = (180 / Mathf.PI) * angleRad;
+		 }
+		 return angleDeg*2;
+     }
 	
 	
 }

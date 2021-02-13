@@ -1,4 +1,5 @@
 ﻿using UnityEngine.Events;
+using System.Collections;
 using UnityEngine;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
@@ -17,10 +18,14 @@ public class AdmobRewardVideo : MonoBehaviour
 	
 	
 	bool isAdClosed = false;
-	bool isRewarded = false;	
+	bool isRewarded = false;
+
+	
 	public void Update(){
+		
+		
 		if (isAdClosed)
-    {
+		{
         if (isRewarded)
         {
             // do all the actions
@@ -37,14 +42,20 @@ public class AdmobRewardVideo : MonoBehaviour
         isAdClosed = false;  // to make sure this action will happen only once.
     }
 	}
-	
+	IEnumerator loadAds(){
+		 while( !rewardedAd.IsLoaded() )
+             yield return null;
+  
+         rewardedAd.Show();
+		gameUI.Resume();
+	}
     public void Start()
     {
 		gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 		gameUI = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InGameUI>();
          string adUnitId;
         #if UNITY_ANDROID
-            adUnitId = "ca-app-pub-3940256099942544/5224354917";
+            adUnitId = "ca-app-pub-6106764200620531/1562060151";
         #elif UNITY_IPHONE
             adUnitId = "ca-app-pub-3940256099942544/1712485313";
         #else
@@ -73,15 +84,12 @@ public class AdmobRewardVideo : MonoBehaviour
     }
 	public  void ShowAd(){
 		Analytics.CustomEvent("Accept Reward Ad");
-		 if (rewardedAd.IsLoaded()) {
-				rewardedAd.Show();
-				gameUI.Resume();
-			}
+		  StartCoroutine(loadAds());
 	}
 	public void LoadAd(){
 		string adUnitId;
 		#if UNITY_ANDROID
-            adUnitId = "ca-app-pub-3940256099942544/5224354917";
+            adUnitId = "ca-app-pub-6106764200620531/1562060151";
         #elif UNITY_IPHONE
             adUnitId = "ca-app-pub-3940256099942544/1712485313";
         #else

@@ -17,20 +17,15 @@ public class Fade : MonoBehaviour
     }
 	public void play_level(){
 		int level = PlayerPrefs.GetInt("Level",1);
-		if(level == 1){
-			Application.LoadLevel("level1");
+		if(level > 0){
+			Application.LoadLevel("level"+level);
 		}
-		if(level == 2){
-			Application.LoadLevel("level2");
-		}
-		if(level == 3){
-			Application.LoadLevel("level3");
-		}
-		if(level == 0){
-			Application.LoadLevel(Application.loadedLevel);
-		}
-		if(level == -1){
+		else if(level == -1){
 			Application.LoadLevel("Menu");
 		}
+		else if(level == 0){
+			Application.LoadLevel(Application.loadedLevelName);
+		}
+		
 	}
 }

@@ -15,11 +15,11 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField, Range(0.1f, 5)]private float Duration = 1;
 
     [Header("Reference")]
-    [SerializeField]private RectTransform StickRect;//The middle joystick UI
+    [SerializeField]public RectTransform StickRect;//The middle joystick UI
     [SerializeField] private RectTransform CenterReference;
 
     //Privates
-    private Vector3 DeathArea;
+    public  Vector3 DeathArea;
     private Vector3 currentVelocity;
     private bool isFree = false;
     private int lastId = -2;
