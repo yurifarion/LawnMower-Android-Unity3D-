@@ -16,8 +16,9 @@
 ## 💻 Requirements
 
 Before starting, make sure you've met the following requirements:
-* Unity 2020,1,6f1
-* This game uses URP for 2D, it's not compatible with HTML5
+* Unity 2020,1,6f1.
+* This game uses Admob SDK and Game Analytics SDK.
+* This game uses Post Processing.
 
 ## 📫 Contributing to Lawn Mower
 
