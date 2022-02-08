@@ -1,6 +1,6 @@
 
 
-# SpaceBulletTime - Roguelike|Procedural generation
+# Lawn Mower | Casual Game | Android
 
 <!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
@@ -8,19 +8,10 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/iuricode/README-template?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/iuricode/README-template?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/iuricode/README-template?style=for-the-badge)
+[![Lawn Mower](sc_1_lawn.png)](https://play.google.com/store/apps/details?id=com.YuriFarion.LawnMower)
 
-<img src="sc_1.png" alt="exemplo imagem">
 
-> Space Bullet is a space roguelike shooter, in this game the bullets and the enemies only move if the player moves. The map is randomly generated so you will alway play a fresh experience.
-### Adjustments and improvementss
-
-I am still developing this game, i can only work on it in my free time, so it's very slow paced
-
-- [x] Create Player movement and animations.
-- [x] Bullet time with bullets and particles when the player isn't moving.
-- [x] Random map based in a seed.
-- [ ] Enemies artificial intelligence, movement
-- [ ] Random indoors and Enemies in the map.
+> Lawn Mower is a Android game with +500 downloads in which you need to cut lawn in different levels. You have different powers and different challenges 
 
 ## 💻 Requirements
 
@@ -28,9 +19,9 @@ Before starting, make sure you've met the following requirements:
 * Unity 2020,1,6f1
 * This game uses URP for 2D, it's not compatible with HTML5
 
-## 📫 Contribuindo para <nome_do_projeto>
+## 📫 Contributing to Lawn Mower
 
-To contribute to <SpaceBulletTime>, follow these steps:
+To contribute to Lawn Mower, follow these steps:
 
 1. Fork this repository.
 2. Create a branch: `git checkout -b <branch_name>`.
