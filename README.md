@@ -38,6 +38,6 @@ Want to be part of this project? Click [HERE](CONTRIBUTING.md) and read how to c
 
 ## 📝 License
 
-This project is under license. See the [LICENSE](CC-BY-4.0.md) file for more details.
+This project is under license. See the [LICENSE](CC-BY-4.0) file for more details.
 
-[⬆Back to the top](#SpaceBulletTime)<br>
+
